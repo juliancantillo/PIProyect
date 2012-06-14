@@ -45,7 +45,7 @@ public class MailService extends Thread implements MsgListener {
 
                 // imprimir informaci�n sobre la conexi�n
                 PIServer.addLog("Conexion recibida de: "
-                        + socketClient.getInetAddress());
+                        + socketClient.getInetAddress()+ ":" + socketClient.getPort());
 
             } // fin de instrucci�n while     
 
