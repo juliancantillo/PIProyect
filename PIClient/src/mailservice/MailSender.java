@@ -23,25 +23,22 @@ public class MailSender extends Thread{
 
     public MailSender(msgEmail mail) {
         this.mail = mail;
-        conf = PIClient.getConfig();
+        s = PIClient.getMailSocket();
     }
-        
+    
     @Override
     public void run() {
         super.run();
         
         try {
-            s = new Socket(conf.getIp(), ServerConfig.SERVER_PORT);
+            s = PIClient.getMailSocket();
             OutputStream os = s.getOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(os);
 
             oos.writeObject(mail);
+                        
+            new MailReceiver(s).start();
             
-            System.out.print("Enviando mensaje a servidor");
-            
-            oos.close();
-            os.close();
-            s.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

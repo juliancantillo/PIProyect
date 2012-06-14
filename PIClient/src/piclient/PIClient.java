@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.net.Socket;
 import javax.swing.*;
 import mailhandler.FrmInbox;
 import mailhandler.FrmNewMail;
@@ -20,6 +21,9 @@ public class PIClient extends JFrame implements ActionListener{
     private static ServerConfig config;
     private static User usr;
     private static FrmLogin login;
+    
+    private static Socket mailSocket;
+    private static Socket userSocket;
     
     private JSplitPane split, splitMain;
     private JScrollPane inputTxt, outputTxt;
@@ -144,10 +148,24 @@ public class PIClient extends JFrame implements ActionListener{
 
     public static void setConfig(ServerConfig config) {
         PIClient.config = config;
+        if(config != null){
+            try{
+            mailSocket = new Socket(config.getIp(), ServerConfig.SERVER_PORT);
+//            userSocket = new Socket(config.getIp(), ServerConfig.USERS_PORT);
+            }catch(Exception e){}
+        }
     }
 
     public static ServerConfig getConfig() {
         return config;
+    }
+
+    public static Socket getMailSocket() {
+        return mailSocket;
+    }
+
+    public static Socket getUserSocket() {
+        return userSocket;
     }
         
     public static void login(){

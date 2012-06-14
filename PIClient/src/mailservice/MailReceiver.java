@@ -7,7 +7,6 @@ package mailservice;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import javax.swing.JOptionPane;
-import userhandler.User;
 
 /**
  *
@@ -30,7 +29,7 @@ public class MailReceiver extends Thread {
             if(obj instanceof String){
                 JOptionPane.showMessageDialog(null, obj, "Error enviando correo", JOptionPane.WARNING_MESSAGE);
             }
-            
+                        
         } catch (Exception e) {
             e.printStackTrace();
         }
