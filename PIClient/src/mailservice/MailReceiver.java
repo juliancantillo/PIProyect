@@ -13,11 +13,11 @@ import userhandler.User;
  *
  * @author julianacb
  */
-public class MailListener extends Thread {
+public class MailReceiver extends Thread {
 
     private Socket s;
    
-    public MailListener(Socket s) {
+    public MailReceiver(Socket s) {
         this.s = s;
     }
       
@@ -25,12 +25,10 @@ public class MailListener extends Thread {
     public void run() {
         try {
             ObjectInputStream in = new ObjectInputStream(s.getInputStream());
-            User u = (User) in.readObject();
+            Object obj = in.readObject();
             
-            if(u != null){
-                
-            }else{
-                JOptionPane.showMessageDialog(null, "Credenciales Erroneas");
+            if(obj instanceof String){
+                JOptionPane.showMessageDialog(null, obj, "Error enviando correo", JOptionPane.WARNING_MESSAGE);
             }
             
         } catch (Exception e) {
