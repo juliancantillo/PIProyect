@@ -67,11 +67,13 @@ public class MailService extends Thread implements MsgListener {
     @Override
     public void inMsg(Object obj, Socket clientSocket) {
 
-        if (obj.getClass() == msgEmail.class) {
+        if (obj instanceof msgEmail) {
             
             if(!DbHandler.incomingMail((msgEmail) obj)){
                 
-                new MailSender(this, clientSocket, "Error, el correo del destinatario no existe").start();
+                String error = "Error, el correo del destinatario no existe";
+                
+                new MailSender(this, clientSocket, error).start();
                 
             }
         } else {
