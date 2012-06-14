@@ -1,4 +1,4 @@
-package iclient;
+package piclient;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -15,7 +15,7 @@ import userhandler.User;
  *
  * @author Julian
  */
-public class IClient extends JFrame implements ActionListener{
+public class PIClient extends JFrame implements ActionListener{
     
     private static ServerConfig config;
     private static User usr;
@@ -31,7 +31,7 @@ public class IClient extends JFrame implements ActionListener{
     private JButton btnNewMail, btnBrowser;
     private JPanel pnlContent, pnlChat;
 
-    public IClient(String name) {
+    public PIClient(String name) {
         super(name);
         
         int b = 5;
@@ -135,7 +135,7 @@ public class IClient extends JFrame implements ActionListener{
     }
     
     public static void setUser(User usr){
-        IClient.usr = usr;        
+        PIClient.usr = usr;        
     }
 
     public static User getUsr() {
@@ -143,7 +143,7 @@ public class IClient extends JFrame implements ActionListener{
     }
 
     public static void setConfig(ServerConfig config) {
-        IClient.config = config;
+        PIClient.config = config;
     }
 
     public static ServerConfig getConfig() {
@@ -156,9 +156,9 @@ public class IClient extends JFrame implements ActionListener{
     }
     
     public static void startApp(){
-        User u = IClient.getUsr();
+        User u = PIClient.getUsr();
         login.close();
-        IClient ob = new IClient("Bienvenido " + u.getName());
+        PIClient ob = new PIClient("Bienvenido " + u.getName());
     }
     
     public static ServerConfig loadConfiguration(){
@@ -211,12 +211,12 @@ public class IClient extends JFrame implements ActionListener{
             UIManager.setLookAndFeel(lookAndFeel);
         } catch (Exception e) {}
         
-        IClient.setConfig(IClient.loadConfiguration());
+        PIClient.setConfig(PIClient.loadConfiguration());
         
-        if(IClient.getConfig() == null){
+        if(PIClient.getConfig() == null){
             FrmConfigServer cofingFrm = new FrmConfigServer(null);
-        }else if(IClient.getUsr() == null){
-            IClient.login();
+        }else if(PIClient.getUsr() == null){
+            PIClient.login();
         }        
     }
 

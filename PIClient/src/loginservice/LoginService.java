@@ -4,8 +4,8 @@
  */
 package loginservice;
 
-import iclient.IClient;
-import iclient.ServerConfig;
+import piclient.PIClient;
+import piclient.ServerConfig;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import javax.swing.JOptionPane;
@@ -24,7 +24,7 @@ public class LoginService extends Thread{
     
     public LoginService(msgLogin login){
         this.login = login;
-        conf = IClient.getConfig();
+        conf = PIClient.getConfig();
     }
     
     
@@ -34,8 +34,8 @@ public class LoginService extends Thread{
     }
     
     public static void setLoggedUser(User u){
-        IClient.setUser(u);
-        IClient.startApp();
+        PIClient.setUser(u);
+        PIClient.startApp();
     }
     
     @Override
@@ -51,7 +51,7 @@ public class LoginService extends Thread{
             LoginService.getLogin(s);
                         
         }catch (java.net.ConnectException e) {
-            String ip = IClient.getConfig().getIp();
+            String ip = PIClient.getConfig().getIp();
             JOptionPane.showMessageDialog(null, "Error :"+e.getMessage() + "\n\nVerifique que el servidor esté inicalizado\nVerifique que la direccion configurada sea la correcta\n\nIP Servidor <<"+ip+">>", "Error con el Servidor", JOptionPane.ERROR_MESSAGE);
         }catch (Exception e) {
             e.printStackTrace();

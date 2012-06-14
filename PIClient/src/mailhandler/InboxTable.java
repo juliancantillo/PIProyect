@@ -5,7 +5,7 @@
 package mailhandler;
 
 import dbhandler.DbHandler;
-import iclient.IClient;
+import piclient.PIClient;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
@@ -52,7 +52,7 @@ public class InboxTable extends AbstractTableModel {
 
     public final void loadData() {
         cache = new Vector();
-        String user = IClient.getUsr().getEmail();
+        String user = PIClient.getUsr().getEmail();
         try {
             String query = "SELECT m.mail_from, m.mail_subject, m.mail_date FROM mail as m WHERE m.mail_to = '"+user+"'";
             ResultSet rs = stmt.executeQuery(query);

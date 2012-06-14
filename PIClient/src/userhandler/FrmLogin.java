@@ -6,7 +6,7 @@ package userhandler;
 
 import guihelpers.GBHelper;
 import guihelpers.Gap;
-import iclient.FrmConfigServer;
+import piclient.FrmConfigServer;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;

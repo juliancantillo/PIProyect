@@ -4,8 +4,8 @@
  */
 package mailservice;
 
-import iclient.IClient;
-import iclient.ServerConfig;
+import piclient.PIClient;
+import piclient.ServerConfig;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -23,7 +23,7 @@ public class MailSender extends Thread{
 
     public MailSender(msgEmail mail) {
         this.mail = mail;
-        conf = IClient.getConfig();
+        conf = PIClient.getConfig();
     }
         
     @Override

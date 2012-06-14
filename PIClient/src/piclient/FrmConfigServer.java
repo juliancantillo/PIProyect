@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package iclient;
+package piclient;
 
 import guihelpers.GBHelper;
 import guihelpers.Gap;
@@ -64,8 +64,8 @@ public class FrmConfigServer extends JDialog implements ActionListener{
     }
     
     private String getSavedIp(){
-        if(IClient.getConfig() != null){
-            return IClient.getConfig().getIp();
+        if(PIClient.getConfig() != null){
+            return PIClient.getConfig().getIp();
         }
         return "";
     }
@@ -93,9 +93,9 @@ public class FrmConfigServer extends JDialog implements ActionListener{
         }
         if(e.getSource() == btnSave){
             if(this.getConfig() != null){
-                IClient.saveConfiguration(this.getConfig());
-                IClient.setConfig(this.getConfig());
-                IClient.login();
+                PIClient.saveConfiguration(this.getConfig());
+                PIClient.setConfig(this.getConfig());
+                PIClient.login();
             }
         }
     }

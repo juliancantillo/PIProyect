@@ -7,7 +7,7 @@ package mailhandler;
 import mailservice.MailSender;
 import guihelpers.GBHelper;
 import guihelpers.Gap;
-import iclient.IClient;
+import piclient.PIClient;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.GridBagLayout;
@@ -98,7 +98,7 @@ public class FrmNewMail extends JDialog implements ActionListener{
     private msgEmail createMail(){
         String from, to, subject, body, date;
         
-        from = IClient.getUsr().getEmail();
+        from = PIClient.getUsr().getEmail();
         to = fldTo.getText();
         subject = fldSubject.getText();
         body = txtBody.getText();
