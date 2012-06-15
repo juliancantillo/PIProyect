@@ -8,7 +8,9 @@ import dbhandler.DbHandler;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import messages.msgCmd;
 import messages.msgEmail;
+import messages.msgUserMail;
 import piserver.MsgListener;
 import piserver.PIServer;
 import piserver.ServerConstants;
@@ -69,14 +71,23 @@ public class MailService extends Thread implements MsgListener {
 
         if (obj instanceof msgEmail) {
             
-            if(!DbHandler.incomingMail((msgEmail) obj)){
-                
+            msgEmail mail = (msgEmail) obj;
+            
+            if(!DbHandler.incomingMail(mail)){
                 String error = "Error, el correo del destinatario no existe";
-                
-                new MailSender(this, clientSocket, error).start();
-                
+                new MailSender(this, clientSocket, error).start();   
+            }else{
+                msgUserMail userMail = DbHandler.getMail(mail.getTo(), true);
+                new MailSender(this, clientSocket, userMail).start();
             }
-        } else {
+        } else if( obj instanceof msgCmd ){
+            msgCmd cmd = (msgCmd) obj;
+            if(cmd.getCmd().equals("getInbox")){
+                msgUserMail userMail = DbHandler.getMail(cmd.getUser(), true);
+                new MailSender(this, clientSocket, userMail).start();
+            }
+            
+        }else {
             System.out.print("Error de objeto");
         }
 

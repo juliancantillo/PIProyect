@@ -4,12 +4,10 @@
  */
 package MailService;
 
-import dbhandler.DbHandler;
-import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import messages.msgEmail;
 import piserver.MsgListener;
 
 /**
@@ -25,28 +23,27 @@ public class MailListener extends Thread {
     public MailListener(MsgListener msg, Socket clientSocket) {
         msgListener = msg;
         socket = clientSocket;
-
-        try {
-            clientSocket.setSoTimeout(5000);
-            
-            InputStream is = clientSocket.getInputStream();
-            ObjectInputStream ois = new ObjectInputStream(is);
-            objPackage = ois.readObject();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     @Override
     public void run() {
         super.run();
-        
-        if(objPackage != null){
-            msgListener.inMsg(objPackage, socket);
+
+        while(!isInterrupted()){
+            try {
+                socket.setSoTimeout(5000);
+
+                InputStream is = socket.getInputStream();
+                ObjectInputStream ois = new ObjectInputStream(is);
+                objPackage = ois.readObject();
+                
+                if(objPackage != null){
+                    msgListener.inMsg(objPackage, socket);
+                }
+            }
+            catch (Exception e) {
+            }
         }
-        
     }
     
 }

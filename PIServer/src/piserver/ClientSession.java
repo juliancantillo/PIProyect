@@ -4,18 +4,12 @@
  */
 package piserver;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author julianacb
  */
-public class ClientSession {
+public class ClientSession{
     
-    private static ArrayList connectedUsers = new ArrayList();
     
-    public static synchronized void addUser(){
-        
-    }
     
 }
