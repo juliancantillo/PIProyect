@@ -9,6 +9,8 @@ import java.net.Socket;
 import javax.swing.*;
 import mailhandler.FrmInbox;
 import mailhandler.FrmNewMail;
+import messages.msgCmd;
+import messages.msgUserMail;
 import userhandler.FrmLogin;
 import userhandler.User;
 
@@ -34,6 +36,7 @@ public class PIClient extends JFrame implements ActionListener{
     private JScrollPane scUsers;
     private JButton btnNewMail, btnBrowser;
     private JPanel pnlContent, pnlChat;
+    private static FrmInbox inbox;
 
     public PIClient(String name) {
         super(name);
@@ -133,9 +136,17 @@ public class PIClient extends JFrame implements ActionListener{
     }
     
     public final JPanel initMailer(){
-        FrmInbox pnl = new FrmInbox();
-        
-        return pnl;
+        inbox = new FrmInbox();
+        return inbox;
+    }
+    
+    public static void updateInbox(msgUserMail mail){
+        inbox.updateTable(mail);
+    }
+    
+    public void getInbox(){
+        msgCmd cmd = new msgCmd(PIClient.getUsr().getEmail(), "getInbox");
+        new mailservice.MailSender(cmd).start();
     }
     
     public static void setUser(User usr){
@@ -148,22 +159,24 @@ public class PIClient extends JFrame implements ActionListener{
 
     public static void setConfig(ServerConfig config) {
         PIClient.config = config;
-        if(config != null){
-            try{
-            mailSocket = new Socket(config.getIp(), ServerConfig.SERVER_PORT);
-//            userSocket = new Socket(config.getIp(), ServerConfig.USERS_PORT);
-            }catch(Exception e){}
-        }
     }
 
     public static ServerConfig getConfig() {
         return config;
     }
 
+    public static void setMailSocket(Socket mailSocket) {
+        PIClient.mailSocket = mailSocket;
+    }
+    
     public static Socket getMailSocket() {
         return mailSocket;
     }
 
+    public static void setUserSocket(Socket userSocket) {
+        PIClient.userSocket = userSocket;
+    }
+    
     public static Socket getUserSocket() {
         return userSocket;
     }
@@ -177,6 +190,7 @@ public class PIClient extends JFrame implements ActionListener{
         User u = PIClient.getUsr();
         login.close();
         PIClient ob = new PIClient("Bienvenido " + u.getName());
+        ob.getInbox();
     }
     
     public static ServerConfig loadConfiguration(){

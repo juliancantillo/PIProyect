@@ -7,6 +7,7 @@ package mailhandler;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import messages.msgUserMail;
 
 /**
  *
@@ -24,6 +25,10 @@ public class FrmInbox extends JPanel{
         scPane = new JScrollPane(tblInbox);
         
         add(scPane);
+    }
+    
+    public void updateTable(msgUserMail mail){
+        tblModel.loadData(mail);
     }
     
 }

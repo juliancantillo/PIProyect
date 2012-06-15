@@ -116,7 +116,9 @@ public class FrmNewMail extends JDialog implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnSend){
-            MailSender sendMail = new MailSender(createMail());
+            msgEmail mail = createMail();
+            MailSender sendMail = new MailSender(mail);
+            sendMail.setDaemon(true);
             sendMail.start();
         }
     }

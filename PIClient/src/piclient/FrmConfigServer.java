@@ -95,6 +95,10 @@ public class FrmConfigServer extends JDialog implements ActionListener{
             if(this.getConfig() != null){
                 PIClient.saveConfiguration(this.getConfig());
                 PIClient.setConfig(this.getConfig());
+            }
+            if(getOwner() != null){
+                dispose();
+            }else{
                 PIClient.login();
             }
         }
