@@ -31,7 +31,7 @@ public class PIServer extends JFrame implements ActionListener{
         initGUI();
         
         setJMenuBar(initMenuBar());
-        
+        setAlwaysOnTop(true);
         setSize(400,300);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -35,6 +35,7 @@ public class MailListener extends Thread {
 
                 InputStream is = socket.getInputStream();
                 ObjectInputStream ois = new ObjectInputStream(is);
+                
                 objPackage = ois.readObject();
                 
                 if(objPackage != null){
@@ -42,6 +43,7 @@ public class MailListener extends Thread {
                 }
             }
             catch (Exception e) {
+                //System.err.print("\nError en " +e.getLocalizedMessage());
             }
         }
     }

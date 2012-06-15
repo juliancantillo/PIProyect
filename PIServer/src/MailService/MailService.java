@@ -56,8 +56,8 @@ public class MailService extends Thread implements MsgListener {
         catch (java.net.BindException e){
             PIServer.addError("El servidor ya está inicializado");
         }
-        catch (IOException excepcionES) {
-            excepcionES.printStackTrace();
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
