@@ -26,7 +26,6 @@ public class MailSender extends Thread{
             try{
                 s = new Socket(PIClient.getConfig().getIp(), ServerConfig.SERVER_PORT);
                 PIClient.setMailSocket(s);
-                System.out.print("Se creo socket: "+s.getPort());
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -42,9 +41,7 @@ public class MailSender extends Thread{
             
             out.writeObject(obj);
             out.flush();
-            
-            System.out.print("Se envio un objeto del tipo: "+obj.getClass().getName());
-            
+                        
             new MailReceiver(s).start();
             
         } catch (Exception e) {

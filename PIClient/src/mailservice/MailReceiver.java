@@ -28,8 +28,6 @@ public class MailReceiver extends Thread {
             ObjectInputStream in = new ObjectInputStream(s.getInputStream());
             Object obj = in.readObject();
 
-            JOptionPane.showMessageDialog(null, "Recibido: "+ obj.getClass().getName());
-
             if(obj instanceof String){
                 JOptionPane.showMessageDialog(null, obj, "Error enviando correo", JOptionPane.WARNING_MESSAGE);
             }
