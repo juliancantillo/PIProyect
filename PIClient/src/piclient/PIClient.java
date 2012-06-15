@@ -165,19 +165,19 @@ public class PIClient extends JFrame implements ActionListener{
         return config;
     }
 
-    public static void setMailSocket(Socket mailSocket) {
+    public static synchronized void setMailSocket(Socket mailSocket) {
         PIClient.mailSocket = mailSocket;
     }
     
-    public static Socket getMailSocket() {
+    public static synchronized Socket getMailSocket() {
         return mailSocket;
     }
 
-    public static void setUserSocket(Socket userSocket) {
+    public static synchronized void setUserSocket(Socket userSocket) {
         PIClient.userSocket = userSocket;
     }
     
-    public static Socket getUserSocket() {
+    public static synchronized Socket getUserSocket() {
         return userSocket;
     }
         

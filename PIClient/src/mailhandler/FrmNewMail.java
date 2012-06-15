@@ -118,7 +118,6 @@ public class FrmNewMail extends JDialog implements ActionListener{
         if(e.getSource() == btnSend){
             msgEmail mail = createMail();
             MailSender sendMail = new MailSender(mail);
-            sendMail.setDaemon(true);
             sendMail.start();
         }
     }

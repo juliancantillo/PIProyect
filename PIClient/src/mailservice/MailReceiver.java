@@ -5,6 +5,7 @@
 package mailservice;
 
 import java.io.ObjectInputStream;
+import java.net.Socket;
 import javax.swing.JOptionPane;
 import messages.msgUserMail;
 import piclient.PIClient;
@@ -15,31 +16,29 @@ import piclient.PIClient;
  */
 public class MailReceiver extends Thread {
 
-    private ObjectInputStream in;
+    private Socket s;
    
-    public MailReceiver(ObjectInputStream i) {
-        this.in = i;
+    public MailReceiver(Socket s) {
+        this.s = s;
     }
       
     @Override
     public void run() {
-        while(!isInterrupted()){
-            try {
-                Object obj = in.readObject();
-                
-                JOptionPane.showMessageDialog(null, "Recibido: "+ obj.getClass().getName());
+        try {
+            ObjectInputStream in = new ObjectInputStream(s.getInputStream());
+            Object obj = in.readObject();
 
-                if(obj instanceof String){
-                    JOptionPane.showMessageDialog(null, obj, "Error enviando correo", JOptionPane.WARNING_MESSAGE);
-                }
-                
-                if(obj instanceof msgUserMail){
-                    PIClient.updateInbox((msgUserMail)obj);
-                }
+            JOptionPane.showMessageDialog(null, "Recibido: "+ obj.getClass().getName());
 
-            } catch (Exception e) {
-                System.out.print("Se perdio la conexion con el servidor" + e.getMessage());
+            if(obj instanceof String){
+                JOptionPane.showMessageDialog(null, obj, "Error enviando correo", JOptionPane.WARNING_MESSAGE);
             }
+
+            if(obj instanceof msgUserMail){
+                PIClient.updateInbox((msgUserMail)obj);
+            }
+        } catch (Exception e) {
+            System.out.print("Se perdio la conexion con el servidor" + e.getMessage());
         }
     }
 }

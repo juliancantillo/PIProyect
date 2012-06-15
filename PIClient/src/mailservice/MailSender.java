@@ -4,9 +4,7 @@
  */
 package mailservice;
 
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 import piclient.PIClient;
 import piclient.ServerConfig;
@@ -28,6 +26,7 @@ public class MailSender extends Thread{
             try{
                 s = new Socket(PIClient.getConfig().getIp(), ServerConfig.SERVER_PORT);
                 PIClient.setMailSocket(s);
+                System.out.print("Se creo socket: "+s.getPort());
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -38,18 +37,15 @@ public class MailSender extends Thread{
     public void run() {
         super.run();
         
-        try {
-            OutputStream os = s.getOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(os);
+        try {            
+            ObjectOutputStream out = new ObjectOutputStream(s.getOutputStream());
             
-            ObjectInputStream in = new ObjectInputStream(s.getInputStream());
-
-            oos.writeObject(obj);
-            oos.flush();
+            out.writeObject(obj);
+            out.flush();
             
             System.out.print("Se envio un objeto del tipo: "+obj.getClass().getName());
             
-            new MailReceiver(in).start();
+            new MailReceiver(s).start();
             
         } catch (Exception e) {
             System.out.print("Se perdio la conexion con el servidor: " + e.getMessage());
