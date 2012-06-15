@@ -62,11 +62,6 @@ public class MailService extends Thread implements MsgListener {
     }
 
     @Override
-    public void inMsg(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public void inMsg(Object obj, Socket clientSocket) {
 
         if (obj instanceof msgEmail) {
@@ -82,9 +77,20 @@ public class MailService extends Thread implements MsgListener {
             }
         } else if( obj instanceof msgCmd ){
             msgCmd cmd = (msgCmd) obj;
-            if(cmd.getCmd().equals("getInbox")){
-                msgUserMail userMail = DbHandler.getMail(cmd.getUser(), true);
-                new MailSender(this, clientSocket, userMail).start();
+            
+            String cmdS = cmd.getCmd();
+            String[] cmdA = cmdS.split(">>");
+            int cmdL = cmdA.length;
+            
+            if(cmdL == 1){
+                if(cmdS.equals("getInbox")){
+                    msgUserMail userMail = DbHandler.getMail(cmd.getUser(), true);
+                    new MailSender(this, clientSocket, userMail).start();
+                }
+            }else if(cmdL > 1){
+                if(cmdA[0].equals("getMailById")){
+                    
+                }
             }
             
         }else {

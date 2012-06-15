@@ -24,21 +24,6 @@ public class UsersService extends Thread implements MsgListener {
     }
 
     @Override
-    public void inMsg(Object obj, Socket clientSocket) {
-
-        if (obj.getClass() == msgLogin.class) {
-            User u = DbHandler.getUser((msgLogin) obj);
-            
-            UsersSender usrSender = new UsersSender(this, clientSocket, u);
-            usrSender.start();
-            
-        } else {
-            System.out.print("Error de objeto");
-        }
-
-    }
-
-    @Override
     public void run() {
         try {
 
@@ -79,7 +64,21 @@ public class UsersService extends Thread implements MsgListener {
     }
 
     @Override
-    public void inMsg(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void inMsg(Object obj, Socket clientSocket) {
+
+        if (obj instanceof msgLogin) {
+            
+            msgLogin login = (msgLogin) obj;
+            
+            piserver.PIServer.addLog("Se esta autenticando un cliente con usuario "+login.getUser() );
+            
+            User u = DbHandler.getUser(login);
+            UsersSender usrSender = new UsersSender(this, clientSocket, u);
+            usrSender.start();
+            
+        } else {
+            System.out.print("Error de objeto");
+        }
+
     }
 }

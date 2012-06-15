@@ -33,10 +33,9 @@ public class MailListener extends Thread {
             try {
                 socket.setSoTimeout(5000);
 
-                InputStream is = socket.getInputStream();
-                ObjectInputStream ois = new ObjectInputStream(is);
+                ObjectInputStream out = new ObjectInputStream(socket.getInputStream());
                 
-                objPackage = ois.readObject();
+                objPackage = out.readObject();
                 
                 if(objPackage != null){
                     msgListener.inMsg(objPackage, socket);

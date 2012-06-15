@@ -149,9 +149,9 @@ public class DbHandler implements ActionListener {
         ArrayList data = new ArrayList();
         
         if(incomming){
-            query = "SELECT * FROM mail WHERE mail_to = '" + user + "';";
+            query = "SELECT id, mail_from as De, mail_subject as Asunto, mail_date as Fecha FROM mail WHERE mail_to = '" + user + "' ORDER BY id DESC;";
         }else{
-            query = "SELECT * FROM mail WHERE mail_from = '" + user + "';";
+            query = "SELECT id, mail_to as Para, mail_subject as Asunto, mail_date as Fecha FROM mail WHERE mail_from = '" + user + "' ORDER BY id DESC;";
         }
                 
         try {
@@ -161,7 +161,7 @@ public class DbHandler implements ActionListener {
 
             headers = new String[ColCount];
             for (int h = 1; h <= ColCount; h++) {
-                headers[h - 1] = meta.getColumnName(h);
+                headers[h - 1] = meta.getColumnLabel(h);
             }
             while (rs.next()) {
                 String[] record = new String[ColCount];

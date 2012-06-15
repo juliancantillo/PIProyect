@@ -13,6 +13,5 @@ import java.net.Socket;
 public interface MsgListener {
     
     public void inMsg(Object obj, Socket clientSocket);
-    public void inMsg(Object obj);
     
 }

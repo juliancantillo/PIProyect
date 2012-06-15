@@ -15,14 +15,12 @@ import userhandler.User;
  */
 public class UsersSender extends Thread{
     
-    private MsgListener msgListener;
     private Socket client;
-    private User user;
+    private Object obj;
     
-    public UsersSender (MsgListener msg, Socket clientSocket, User u) {
-        msgListener = msg;
-        client = clientSocket;
-        user = u;
+    public UsersSender (MsgListener msg, Socket clientSocket, Object o) {        
+        this.client = clientSocket;
+        this.obj = o;
     }
 
     @Override
@@ -33,13 +31,17 @@ public class UsersSender extends Thread{
             
             ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
             
-            out.writeObject(user);
+            out.writeObject(obj);
             out.flush();
             
-            if(user != null){
-                piserver.PIServer.addLog("Cliente reconocido como "+user.getName() );
-            }else{
-                piserver.PIServer.addLog("Intendo de login fallido");
+            if(obj instanceof User){
+                User user = (User) obj;
+                
+                if(user != null){
+                    piserver.PIServer.addLog("Cliente reconocido como "+user.getName() );
+                }else{
+                    piserver.PIServer.addLog("Intendo de login fallido");
+                }
             }
                         
 //            out.close();
